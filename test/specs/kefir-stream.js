@@ -118,7 +118,10 @@ describe('Kefir.stream', () => {
     a.take(1).onValue(() => {})
     a.take(1).onValue(() => {})
 
-    expect(log).to.deep.equal([{sub: 1, unsub: 1}, {sub: 1, unsub: 1}])
+    expect(log).to.deep.equal([
+      {sub: 1, unsub: 1},
+      {sub: 1, unsub: 1},
+    ])
   })
 
   it('should not throw if not falsey but not a function returned', () => {
@@ -127,7 +130,7 @@ describe('Kefir.stream', () => {
 
   it('emitter should return a boolean representing if anyone intrested in future events', () => {
     let emitter = null
-    let a = Kefir.stream(em => emitter = em)
+    let a = Kefir.stream(em => (emitter = em))
     activate(a)
     expect(emitter.value(1)).to.equal(true)
     deactivate(a)

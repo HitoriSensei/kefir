@@ -291,7 +291,11 @@ describe('combine', () => {
 
         basePoolA.plug(Kefir.constant(2))
 
-        expect(emitted).to.deep.equal([[2, 1], [2, 1], [2, 1]])
+        expect(emitted).to.deep.equal([
+          [2, 1],
+          [2, 1],
+          [2, 1],
+        ])
       })
     })
   })
@@ -577,9 +581,11 @@ describe('combine', () => {
 
       let log = []
 
-      innerFooCombined.filter(x => x === 123).onValue(x => {
-        log.push('foo ' + x)
-      })
+      innerFooCombined
+        .filter(x => x === 123)
+        .onValue(x => {
+          log.push('foo ' + x)
+        })
 
       function foo() {
         innerFooBusEmitter.emit(123)
