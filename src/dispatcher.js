@@ -14,8 +14,9 @@ function callSubscriber(type, fn, event) {
   }
 }
 
-function Dispatcher() {
+function Dispatcher(batchingQueue) {
   this._items = []
+  this._batchingQueue = batchingQueue
   this._spies = []
   this._inLoop = 0
   this._removedItems = null
@@ -57,6 +58,8 @@ extend(Dispatcher.prototype, {
   },
 
   dispatch(event) {
+    this._batchingQueue.lock()
+
     this._inLoop++
     for (let i = 0, spies = this._spies; this._spies !== null && i < spies.length; i++) {
       spies[i](event)
@@ -72,13 +75,15 @@ extend(Dispatcher.prototype, {
       if (this._removedItems !== null && contains(this._removedItems, items[i])) {
         continue
       }
-
       callSubscriber(items[i].type, items[i].fn, event)
     }
     this._inLoop--
+
     if (this._inLoop === 0) {
       this._removedItems = null
     }
+
+    this._batchingQueue.release()
   },
 
   cleanup() {

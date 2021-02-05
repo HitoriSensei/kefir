@@ -1,7 +1,7 @@
 {
-  "name": "kefir",
-  "version": "3.8.6",
-  "description": "Reactive Programming library for JavaScript inspired by Bacon.js and RxJS with focus on high performance and low memory usage",
+  "name": "kefir-atomic",
+  "version": "13.0.10",
+  "description": "Fork of Kefir.js with atomic combine operations. Atomic combine operations doesn't generate unpredictable intermediate values if all sources come from the single root and are synchronous transformations (ex. mapping the Redux state).",
   "main": "dist/kefir.js",
   "module": "dist/kefir.esm.js",
   "scripts": {
@@ -31,6 +31,12 @@
     "Observable"
   ],
   "author": "Roman Pominov <rpominov@gmail.com>",
+  "contributors": [
+    "Piotr Hitori Bosak <piotr.hitori.bosak@gmail.com>"
+  ],
+  "maintainers": [
+    "Piotr Hitori Bosak <piotr.hitori.bosak@gmail.com>"
+  ],
   "homepage": "https://github.com/kefirjs/kefir",
   "repository": {
     "type": "git",

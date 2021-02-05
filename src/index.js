@@ -289,7 +289,14 @@ Observable.prototype.thru = function(fn) {
 
 // (Array<Stream|Property>, Function|undefiend) -> Stream
 // (Array<Stream|Property>, Array<Stream|Property>, Function|undefiend) -> Stream
-import combine from './many-sources/combine'
+import combineLegacy from './many-sources/combine'
+Observable.prototype.combineLegacy = function(other, combinator) {
+  return combineLegacy([this, other], combinator)
+}
+
+// (Array<Stream|Property>, Function|undefiend) -> Stream
+// (Array<Stream|Property>, Array<Stream|Property>, Function|undefiend) -> Stream
+import combine from './many-sources/combine-batched'
 Observable.prototype.combine = function(other, combinator) {
   return combine([this, other], combinator)
 }
@@ -461,6 +468,7 @@ const Kefir = {
   fromPromise,
   fromESObservable,
   combine,
+  combineLegacy,
   zip,
   merge,
   concat,
@@ -492,6 +500,7 @@ export {
   fromPromise,
   fromESObservable,
   combine,
+  combineLegacy,
   zip,
   merge,
   concat,
