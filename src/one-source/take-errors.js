@@ -1,28 +1,28 @@
-import {createStream, createProperty} from '../patterns/one-source'
+import { createStream, createProperty } from "../patterns/one-source";
 
 const mixin = {
-  _init({n}) {
-    this._n = n
+  _init({ n }) {
+    this._n = n;
     if (n <= 0) {
-      this._emitEnd()
+      this._emitEnd();
     }
   },
 
   _handleError(x) {
     if (this._n === 0) {
-      return
+      return;
     }
-    this._n--
-    this._emitError(x)
+    this._n--;
+    this._emitError(x);
     if (this._n === 0) {
-      this._emitEnd()
+      this._emitEnd();
     }
-  },
-}
+  }
+};
 
-const S = createStream('takeErrors', mixin)
-const P = createProperty('takeErrors', mixin)
+const S = createStream("takeErrors", mixin);
+const P = createProperty("takeErrors", mixin);
 
 export default function takeErrors(obs, n) {
-  return new (obs._ofSameType(S, P))(obs, {n})
+  return new (obs._ofSameType(S, P))(obs, { n });
 }

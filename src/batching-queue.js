@@ -1,35 +1,35 @@
 export default function BatchingQueue() {
-  this.lockCounter = 0
-  this.batched = undefined
+  this.lockCounter = 0;
+  this.batched = undefined;
 
   this.lock = function() {
-    this.lockCounter++
-  }
+    this.lockCounter++;
+  };
 
   this.release = function() {
-    this.lockCounter--
+    this.lockCounter--;
 
     if (this.lockCounter === 0 && this.batched) {
-      this.flushBatchingQueue()
+      this.flushBatchingQueue();
     }
-  }
+  };
 
   this.push = function(node) {
     if (!this.lockCounter) {
-      node._emitQueued()
+      node._emitQueued();
     } else {
       if (this.batched) {
-        this.batched.push(node)
+        this.batched.push(node);
       } else {
-        this.batched = [node]
+        this.batched = [node];
       }
     }
-  }
+  };
 
   this.flushBatchingQueue = function() {
-    let batchedNode
+    let batchedNode;
     while ((batchedNode = this.batched.shift())) {
-      batchedNode._emitQueued()
+      batchedNode._emitQueued();
     }
-  }
+  };
 }
